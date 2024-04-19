@@ -60,3 +60,31 @@ Widget cachedImageForItem(String url, {double? height, double? width, BoxFit? bo
     errorWidget: (context, url, error) => const Icon(
           Icons.error,
         ));
+
+
+class AppButton extends StatelessWidget {
+  final GestureTapCallback onTap;
+
+  final String title;
+
+  const AppButton({super.key, required this.onTap, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+        onPressed: onTap,
+        style: ButtonStyle(
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(7.0),
+          )),
+          shadowColor: MaterialStateProperty.all<Color>(AppColors.orangeColor),
+          elevation: MaterialStateProperty.all<double>(0),
+          backgroundColor: MaterialStateProperty.all<Color>(AppColors.orangeColor),
+          padding: MaterialStateProperty.all<EdgeInsetsGeometry>(const EdgeInsets.symmetric(vertical: 15, horizontal: 15)),
+        ),
+        child: Text(title,
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            style: const TextStyle(fontWeight: FontWeight.w600, color: AppColors.whiteColor, fontSize: 18)));
+  }
+}

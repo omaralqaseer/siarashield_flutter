@@ -16,12 +16,15 @@ Minimal example:
 
 ```dart
     SaraShieldWidget(
-        cieraModel: CyberCieraModel(
-            MasterUrlId: 'VYz433DfqQ5LhBcgaamnbw4Wy4K9CyQT', //Master URl ID
-            RequestUrl: 'com.app.cyber_ceiara' //Package name
-
-            ),
-      ),
+        loginTap: (val) {
+        //To-Do On LoginTap 
+        },
+      cieraModel: CyberCieraModel(
+      masterUrlId: 'GIGYGUgeyiy86786BJHBIY', //Master URl ID
+      requestUrl: 'com.app.testapp' //Package name,
+),
+),
+),
 ```
 
 

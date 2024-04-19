@@ -13,10 +13,10 @@ import 'package:siarashield_flutter/common/extension_widget.dart';
 import '../application_constants/app_constant.dart';
 import '../common/common_widgets.dart';
 import '../models/get_info_model.dart';
-import '../screens/popup_screen.dart';
+import '../popup_screen.dart';
 import '../siarashield_flutter.dart';
 
-class LoginController extends GetxController {
+class SaraShieldController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isOtherLoading = false.obs;
   RxString error = "".obs;

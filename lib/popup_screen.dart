@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:siarashield_flutter/application_constants/app_constant.dart';
 
-import '../common/common_widgets.dart';
-import '../controllers/popoup_controller.dart';
-import '../siarashield_flutter.dart';
-import 'login_screen.dart';
+import 'common/common_widgets.dart';
+import 'controllers/popoup_controller.dart';
+import 'siarashield_flutter.dart';
 
 class PopupScreen extends StatefulWidget {
   final String visiterId;
@@ -45,7 +44,7 @@ class _PopupScreenState extends State<PopupScreen> {
                   children: [
                     Image.asset(
                       ImageAssets.download,
-                      scale: 5,
+                      scale: 5,package: 'siarashield_flutter',
                     ),
                     GestureDetector(
                         onTap: () {

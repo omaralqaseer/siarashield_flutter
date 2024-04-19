@@ -39,7 +39,8 @@ abstract class ImageAssets{
 
 abstract class AppColors {
   AppColors._();
-  static const Color blueColor = Color(0xff0081c9);
+  static const Color blueColor = Color(0xff3d6db8);
+  static const Color blueColor2 = Color(0xff3a6bb7);
   static const Color blackColor = Color(0xff000000);
   static const Color blueLightColor = Color(0xff425363);
   static const Color lightBlueColor = Color(0xffb3daef);
@@ -48,8 +49,10 @@ abstract class AppColors {
   static const Color tealColor = Colors.cyan;
   static const Color  whiteColor = Colors.white;
   static Color yellowColor = const Color(0xffefb546);
+  // static Color orangeColor = const Color(0xfff47815);
   static const Color greyColor = Colors.grey;
-  static const Color greyColor2 = Color(0xff171616);
+  static const Color greyColor2 = Color(0xffe9eae9);
+  static const Color greyColor3 = Color(0xff878888);
   static const Color orangeColor = Color(0xffed7700);
   static const Color pinkColor = Color(0xffeb536a);
   static const Color purpleColor = Colors.purple;
