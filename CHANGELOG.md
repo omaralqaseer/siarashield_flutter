@@ -7,7 +7,7 @@
 * TODO: Readme File changes
 
 
-## 0.0.2
+## 0.0.3
 
 * TODO: UI Update
 * TODO: Bug Fixes
