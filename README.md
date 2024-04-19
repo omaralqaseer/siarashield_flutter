@@ -8,6 +8,9 @@ To authenticate using siarashield
 To use this package, add siarashield_flutter as a dependency in your pubspec.yaml file.
 
 ## Usage
+This MasterUrlId you will  get from this webist when you add your package name.
+
+https://mycybersiara.com/
 
 Minimal example:
 
