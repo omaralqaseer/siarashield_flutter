@@ -5,17 +5,17 @@ abstract class ApiConstant {
   // static String baseUrl ="https://embed.mycybersiara.com/api/";
   static String baseUrl ="https://embed.mycybersiara.com/api/";
 
-  static String GetCyberSiaraForAndroid="CyberSiara/GetCyberSiaraForAndroid";
+  static String getCyberSiaraForAndroid="CyberSiara/GetCyberSiaraForAndroid";
 
-  static String VerifiedSubmitForAndroid="SubmitCaptcha/VerifiedSubmitForAndroid";
+  static String verifiedSubmitForAndroid="SubmitCaptcha/VerifiedSubmitForAndroid";
 
   //if successfull  to display login button
 
   //if fail then display on the model
-  static String CaptchaForAndroid="GenerateCaptcha/CaptchaForAndroid";
+  static String captchaForAndroid="GenerateCaptcha/CaptchaForAndroid";
 
 
-  static String SubmitCaptchInfoForAndroid="SubmitCaptcha/SubmitCaptchInfoForAndroid";
+  static String submitCaptchInfoForAndroid="SubmitCaptcha/SubmitCaptchInfoForAndroid";
 
 }
 
@@ -27,7 +27,7 @@ abstract class ImageAssets{
   static const String dot="${asset}dots.png";
   static const String download="${asset}download.png";
   static const String hide="${asset}hide.png";
-  static const String logo="assets/logo.png";
+  static const String logo="${asset}logo.png";
   static const String refreshPage="${asset}refresh-page-option.png";
   static const String rightCaptcha="${asset}RightCaptcha.gif";
   static const String slideArrow="${asset}slideArrow.png";

@@ -1,16 +1,24 @@
-# siarashield_flutter_example
+# siarashield_flutter
 
-Demonstrates how to use the siarashield_flutter plugin.
+To authenticate using siarashield
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+## Getting started
 
-A few resources to get you started if this is your first Flutter project:
+To use this package, add siarashield_flutter as a dependency in your pubspec.yaml file.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Usage
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Minimal example:
+
+```dart
+    SaraShieldWidget(
+        cieraModel: CyberCieraModel(
+            MasterUrlId: 'VYz433DfqQ5LhBcgaamnbw4Wy4K9CyQT', //Master URl ID
+            RequestUrl: 'com.app.cyber_ceiara' //Package name
+
+            ),
+      ),
+```
+
+

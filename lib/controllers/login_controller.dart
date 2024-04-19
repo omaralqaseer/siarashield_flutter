@@ -14,6 +14,7 @@ import '../application_constants/app_constant.dart';
 import '../common/common_widgets.dart';
 import '../models/get_info_model.dart';
 import '../screens/popup_screen.dart';
+import '../siarashield_flutter.dart';
 
 class LoginController extends GetxController {
   RxBool isLoading = false.obs;
@@ -29,7 +30,7 @@ class LoginController extends GetxController {
   String udid = "";
   RxBool isVerified = false.obs;
 
-  getMyDeviceInfo(double height, double width) async {
+  getMyDeviceInfo(double height, double width,CyberCieraModel cieraModel) async {
     isLoading(true);
     error("");
     apiError("");
@@ -49,8 +50,8 @@ class LoginController extends GetxController {
       }
 
       Map<String, dynamic> map = {
-        "MasterUrlId": "VYz433DfqQ5LhBcgaamnbw4Wy4K9CyQT",
-        "RequestUrl": "com.app.cyber_ceiara",
+        "MasterUrlId":cieraModel.masterUrlId,// "VYz433DfqQ5LhBcgaamnbw4Wy4K9CyQT",
+        "RequestUrl":cieraModel.requestUrl,// "com.app.cyber_ceiara",
         "BrowserIdentity": udid,
         "DeviceIp": deviceIp,
         "DeviceType": Platform.isAndroid ? "Android" : "ios",
@@ -61,14 +62,14 @@ class LoginController extends GetxController {
       };
 
       await postAPI(
-          methodName: ApiConstant.GetCyberSiaraForAndroid,
+          methodName: ApiConstant.getCyberSiaraForAndroid,
           param: map,
           callback: (value) {
             Map<String, dynamic> valueMap = json.decode(value.response);
             if (valueMap["Message"] == "success") {
               GetInfoModel getInfoModel = GetInfoModel.fromJson(valueMap);
-              requestId.value = getInfoModel.RequestId;
-              visiterId.value = getInfoModel.VisiterId;
+              requestId.value = getInfoModel.requestId;
+              visiterId.value = getInfoModel.visiterId;
             } else {
               apiError("Api Error");
               toast(apiError.value.toString());
@@ -82,7 +83,7 @@ class LoginController extends GetxController {
     }
   }
 
-  slideButton(context) async {
+  slideButton(context, CyberCieraModel cieraModel) async {
     isVerified(false);
     isOtherLoading(true);
     error("");
@@ -90,7 +91,7 @@ class LoginController extends GetxController {
 
     try {
       Map<String, dynamic> map = {
-        "MasterUrl": "VYz433DfqQ5LhBcgaamnbw4Wy4K9CyQT",
+        "MasterUrl":cieraModel.masterUrlId,// "VYz433DfqQ5LhBcgaamnbw4Wy4K9CyQT",
         "BrowserIdentity": udid,
         "DeviceIp": deviceIp,
         "DeviceName": deviceName,
@@ -103,7 +104,7 @@ class LoginController extends GetxController {
       };
 
       await postAPI(
-          methodName: ApiConstant.VerifiedSubmitForAndroid,
+          methodName: ApiConstant.verifiedSubmitForAndroid,
           param: map,
           callback: (value) async {
             Map<String, dynamic> valueMap = json.decode(value.response);
@@ -134,7 +135,8 @@ class LoginController extends GetxController {
                 duration: const Duration(milliseconds: 500),
                 builder: (BuildContext context) {
                   return PopupScreen(
-                    VisiterId: visiterId.value,
+                  cieraModel: cieraModel,
+                    visiterId: visiterId.value,
                     requestId: requestId.value,
                   ).alertCard(context);
                 },

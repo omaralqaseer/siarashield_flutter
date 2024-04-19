@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,9 +7,11 @@ import 'package:slider_button/slider_button.dart';
 
 import '../common/common_widgets.dart';
 import '../controllers/login_controller.dart';
+import '../siarashield_flutter.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  final CyberCieraModel cieraModel;
+  const LoginScreen({super.key, required this.cieraModel});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -27,13 +28,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(   ImageAssets.logo,);
+
     return Scaffold(
       backgroundColor: AppColors.blueColor,
       body: GetX<LoginController>(
         init: LoginController(),
         initState: (val) {
-          val.controller?.getMyDeviceInfo(screenHeight(context),screenWidth(context));
+          val.controller?.getMyDeviceInfo(screenHeight(context),screenWidth(context),widget.cieraModel);
         },
         builder: (controller) {
           return controller.isLoading.value
@@ -164,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   ],
                                                 ))
                                             : controller.isOtherLoading.value
-                                                ? LoadingWidget2()
+                                                ? const LoadingWidget2()
                                                 : SliderButton(
                                                     backgroundColor: Colors.black12,
                                                 shimmer: false,
@@ -178,7 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       // isSlide = !isSlide;
                                                       // setState(() {});
 
-                                                      await controller.slideButton(context);
+                                                      await controller.slideButton(context, widget.cieraModel);
 
                                                       // showAnimatedDialog(
                                                       //   context: context,
@@ -300,7 +301,7 @@ class AppButton extends StatelessWidget {
 
   final String title;
 
-  const AppButton({Key? key, required this.onTap, required this.title}) : super(key: key);
+  const AppButton({super.key, required this.onTap, required this.title});
 
   @override
   Widget build(BuildContext context) {

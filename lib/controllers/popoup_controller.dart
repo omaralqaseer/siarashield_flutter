@@ -9,6 +9,7 @@ import 'package:public_ip_address/public_ip_address.dart';
 import '../application_constants/app_constant.dart';
 import '../application_constants/network_call.dart';
 import '../common/common_widgets.dart';
+import '../siarashield_flutter.dart';
 
 class PopupController extends GetxController {
   RxBool isLoading = false.obs;
@@ -25,7 +26,7 @@ class PopupController extends GetxController {
   final IpAddress _ipAddress = IpAddress();
   RxString captchaUrl = "".obs;
 
-  getCaptcha({required double height, required double width, required String VisiterId}) async {
+  getCaptcha({required double height, required double width, required String visiterId,required CyberCieraModel cieraModel}) async {
     isOtherLoading(true);
     error("");
     apiError("");
@@ -44,8 +45,8 @@ class PopupController extends GetxController {
         deviceName = iosInfo.model;
       }
       Map<String, dynamic> map = {
-        "MasterUrlId": "VYz433DfqQ5LhBcgaamnbw4Wy4K9CyQT",
-        "RequestUrl": "com.app.cyber_ceiara",
+        "MasterUrlId":cieraModel.masterUrlId,// "VYz433DfqQ5LhBcgaamnbw4Wy4K9CyQT",
+        "RequestUrl":cieraModel.requestUrl,// "com.app.cyber_ceiara",
         "BrowserIdentity": udid,
         "DeviceIp": deviceIp,
         "DeviceType": Platform.isAndroid ? "Android" : "ios",
@@ -53,10 +54,10 @@ class PopupController extends GetxController {
         "DeviceName": deviceName,
         "DeviceHeight": height.round(),
         "DeviceWidth": width.round(),
-        "VisiterId": VisiterId,
+        "VisiterId": visiterId,
       };
       await postAPI(
-          methodName: ApiConstant.CaptchaForAndroid,
+          methodName: ApiConstant.captchaForAndroid,
           param: map,
           callback: (value) {
             Map<String, dynamic> valueMap = json.decode(value.response);
@@ -76,14 +77,14 @@ class PopupController extends GetxController {
 
   RxBool isSuccess = false.obs;
 
-  submitCaptcha({required String txt, required String requestId, required String visiterId}) async {
+  submitCaptcha({required String txt, required String requestId, required String visiterId,required CyberCieraModel cieraModel}) async {
     isLoading(true);
     error("");
     apiError("");
     isSuccess(false);
     try {
       Map<String, dynamic> map = {
-        "MasterUrl": "VYz433DfqQ5LhBcgaamnbw4Wy4K9CyQT",
+        "MasterUrl":cieraModel.masterUrlId,// "VYz433DfqQ5LhBcgaamnbw4Wy4K9CyQT",
         "DeviceIp": deviceIp,
         "DeviceType": Platform.isAndroid ? "Android" : "ios",
         "DeviceName": deviceName,
@@ -100,7 +101,7 @@ class PopupController extends GetxController {
       };
 
       await postAPI(
-          methodName: ApiConstant.SubmitCaptchInfoForAndroid,
+          methodName: ApiConstant.submitCaptchInfoForAndroid,
           param: map,
           callback: (value) {
             Map<String, dynamic> valueMap = json.decode(value.response);

@@ -21,7 +21,7 @@ Future<bool?> toast(String txt) => Fluttertoast.showToast(
 
 
 class LoadingWidget extends StatelessWidget {
-  const LoadingWidget({Key? key}) : super(key: key);
+  const LoadingWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class LoadingWidget extends StatelessWidget {
 }
 
 class LoadingWidget2 extends StatelessWidget {
-  const LoadingWidget2({Key? key}) : super(key: key);
+  const LoadingWidget2({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class LoadingStateWidget extends StatelessWidget {
   final Widget child;
   final bool isLoading;
 
-  const LoadingStateWidget({required this.isLoading, required this.child, Key? key}) : super(key: key);
+  const LoadingStateWidget({required this.isLoading, required this.child, super.key});
 
   @override
   Widget build(BuildContext context) {

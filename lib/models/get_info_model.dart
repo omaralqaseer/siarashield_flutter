@@ -6,10 +6,10 @@ class GetInfoModel {
     // this.Captcha,
     // required this.HtmlFormate,
     // this.SecurityLevel,
-    required this.RequestId,
+    required this.requestId,
     // required this.FpStatus,
     // this.VisiterLanguage,
-    required this.VisiterId,
+    required this.visiterId,
   });
   // late final int HttpStatusCode;
   // late final String Message;
@@ -17,10 +17,10 @@ class GetInfoModel {
   // late final Null Captcha;
   // late final String HtmlFormate;
   // late final Null SecurityLevel;
-  late final String RequestId;
+  late final String requestId;
   // late final String FpStatus;
   // late final Null VisiterLanguage;
-  late final String VisiterId;
+  late final String visiterId;
 
   GetInfoModel.fromJson(Map<String, dynamic> json){
     // HttpStatusCode = json['HttpStatusCode'];
@@ -29,25 +29,25 @@ class GetInfoModel {
     // Captcha = null;
     // HtmlFormate = json['HtmlFormate'];
     // SecurityLevel = null;
-    RequestId = json['RequestId'];
+    requestId = json['RequestId'];
     // FpStatus = json['FpStatus'];
     // VisiterLanguage = null;
-    VisiterId = json['Visiter_Id'];
+    visiterId = json['Visiter_Id'];
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
+    final data = <String, dynamic>{};
     // _data['HttpStatusCode'] = HttpStatusCode;
     // _data['Message'] = Message;
     // _data['data'] = data.toJson();
     // _data['Captcha'] = Captcha;
     // _data['HtmlFormate'] = HtmlFormate;
     // _data['SecurityLevel'] = SecurityLevel;
-    _data['RequestId'] = RequestId;
+    data['RequestId'] = requestId;
     // _data['FpStatus'] = FpStatus;
     // _data['VisiterLanguage'] = VisiterLanguage;
-    _data['Visiter_Id'] = VisiterId;
-    return _data;
+    data['Visiter_Id'] = visiterId;
+    return data;
   }
 }
 
@@ -57,7 +57,7 @@ class Data {
   Data.fromJson(Map json);
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    return _data;
+    final data = <String, dynamic>{};
+    return data;
   }
 }
