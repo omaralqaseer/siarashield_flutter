@@ -15,3 +15,7 @@
 ## 0.0.4
 
 * TODO: Bug Fixes
+
+## 0.0.5
+
+* TODO: Language Dropdown removed from Popup model

@@ -60,34 +60,34 @@ class _PopupScreenState extends State<PopupScreen> {
                 const SizedBox(
                   height: 12,
                 ),
-                Text("Please select language", style: _t1),
-                const SizedBox(
-                  height: 12,
-                ),
-                Container(
-                  height: 50,
-                  width: double.infinity,
-                  // margin: const EdgeInsets.all(20),
-                  padding: const EdgeInsets.only(left: 20, right: 20),
-                  decoration: BoxDecoration(
-                      color: AppColors.whiteColor, border: Border.all(color: AppColors.blackColor), borderRadius: BorderRadius.circular(5)),
-                  child: DropdownButton(
-                    value: dropdownvalue,
-                    underline: Container(color: Colors.white),
-                    icon: const Icon(Icons.keyboard_arrow_down),
-                    items: items.map((String items) {
-                      return DropdownMenuItem(value: items, child: Text(items));
-                    }).toList(),
-                    onChanged: (String? newValue) async {
-                      dropdownvalue = newValue!;
-
-                      setState(() {});
-                    },
-                  ),
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
+                // Text("Please select language", style: _t1),
+                // const SizedBox(
+                //   height: 12,
+                // ),
+                // Container(
+                //   height: 50,
+                //   width: double.infinity,
+                //   // margin: const EdgeInsets.all(20),
+                //   padding: const EdgeInsets.only(left: 20, right: 20),
+                //   decoration: BoxDecoration(
+                //       color: AppColors.whiteColor, border: Border.all(color: AppColors.blackColor), borderRadius: BorderRadius.circular(5)),
+                //   child: DropdownButton(
+                //     value: dropdownvalue,
+                //     underline: Container(color: Colors.white),
+                //     icon: const Icon(Icons.keyboard_arrow_down),
+                //     items: items.map((String items) {
+                //       return DropdownMenuItem(value: items, child: Text(items));
+                //     }).toList(),
+                //     onChanged: (String? newValue) async {
+                //       dropdownvalue = newValue!;
+                //
+                //       setState(() {});
+                //     },
+                //   ),
+                // ),
+                // const SizedBox(
+                //   height: 12,
+                // ),
                 Text("Type all the displayed letters", style: _t1),
                 const SizedBox(
                   height: 12,
