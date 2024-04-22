@@ -26,7 +26,6 @@ class _MyAppState extends State<MyApp> {
             cieraModel: CyberCieraModel(
                 masterUrlId: 'Huhuowhfouwhfouwh', //Master URl ID
                 requestUrl: 'com.app.testapp' //Package name,
-
                 ),
           ),
         ),
