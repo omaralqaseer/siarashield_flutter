@@ -1,4 +1,4 @@
-package com.app.siarashield_flutter_example
+package com.app.example
 
 import io.flutter.embedding.android.FlutterActivity
 

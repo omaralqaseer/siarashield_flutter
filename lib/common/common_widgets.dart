@@ -25,15 +25,6 @@ class LoadingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: CircularProgressIndicator(color: AppColors.whiteColor));
-  }
-}
-
-class LoadingWidget2 extends StatelessWidget {
-  const LoadingWidget2({super.key});
-
-  @override
-  Widget build(BuildContext context) {
     return const Center(child: CircularProgressIndicator(color: AppColors.blueColor));
   }
 }
@@ -47,7 +38,7 @@ class LoadingStateWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IgnorePointer(
-        ignoring: isLoading, child: Stack(alignment: Alignment.center, children: [child, isLoading ? const LoadingWidget2() : const SizedBox()]));
+        ignoring: isLoading, child: Stack(alignment: Alignment.center, children: [child, isLoading ? const LoadingWidget() : const SizedBox()]));
   }
 }
 
@@ -56,7 +47,7 @@ Widget cachedImageForItem(String url, {double? height, double? width, BoxFit? bo
     height: height,
     width: width,
     fit: boxFit,
-    placeholder: (context, url) => const LoadingWidget2(),
+    placeholder: (context, url) => const LoadingWidget(),
     errorWidget: (context, url, error) => const Icon(
           Icons.error,
         ));
@@ -74,13 +65,13 @@ class AppButton extends StatelessWidget {
     return ElevatedButton(
         onPressed: onTap,
         style: ButtonStyle(
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
+          shape: WidgetStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(7.0),
           )),
-          shadowColor: MaterialStateProperty.all<Color>(AppColors.orangeColor),
-          elevation: MaterialStateProperty.all<double>(0),
-          backgroundColor: MaterialStateProperty.all<Color>(AppColors.orangeColor),
-          padding: MaterialStateProperty.all<EdgeInsetsGeometry>(const EdgeInsets.symmetric(vertical: 15, horizontal: 15)),
+          shadowColor: WidgetStateProperty.all<Color>(AppColors.orangeColor),
+          elevation: WidgetStateProperty.all<double>(0),
+          backgroundColor: WidgetStateProperty.all<Color>(AppColors.orangeColor),
+          padding: WidgetStateProperty.all<EdgeInsetsGeometry>(const EdgeInsets.symmetric(vertical: 15, horizontal: 15)),
         ),
         child: Text(title,
             textAlign: TextAlign.center,

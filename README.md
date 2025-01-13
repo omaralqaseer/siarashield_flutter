@@ -16,9 +16,12 @@ Minimal example:
 
 ```dart
     SaraShieldWidget(
-        loginTap: (val) {
-        //To-Do On LoginTap 
-        },
+    loginTap: (bool isSuccess) {
+      if (isSuccess) {
+          //To-Do On Success
+        print("Tapped==>$isSuccess");
+        }
+      },
       cieraModel: CyberCieraModel(
       masterUrlId: 'GIGYGUgeyiy86786BJHBIY', //Master URl ID
       requestUrl: 'com.app.testapp' //Package name,

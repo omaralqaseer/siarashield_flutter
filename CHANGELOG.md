@@ -19,3 +19,7 @@
 ## 0.0.5
 
 * TODO: Language Dropdown removed from Popup model
+
+## 0.0.6
+
+* TODO: Changed Design to Submit button and Upgrade the packages

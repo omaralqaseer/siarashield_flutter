@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:siarashield_flutter/application_constants/app_constant.dart';
@@ -11,7 +10,9 @@ class PopupScreen extends StatefulWidget {
   final String visiterId;
   final String requestId;
   final CyberCieraModel cieraModel;
-  const PopupScreen({super.key, required this.visiterId, required this.requestId, required this.cieraModel});
+  final Function(bool isSuccess) loginTap;
+
+  const PopupScreen({super.key, required this.visiterId, required this.requestId, required this.cieraModel, required this.loginTap});
 
   @override
   State<PopupScreen> createState() => _PopupScreenState();
@@ -29,7 +30,8 @@ class _PopupScreenState extends State<PopupScreen> {
     return GetX<PopupController>(
       init: PopupController(),
       initState: (val) {
-        val.controller?.getCaptcha(height: screenHeight(context), width: screenWidth(context), visiterId: widget.visiterId,cieraModel: widget.cieraModel);
+        val.controller
+            ?.getCaptcha(height: screenHeight(context), width: screenWidth(context), visiterId: widget.visiterId, cieraModel: widget.cieraModel);
       },
       builder: (controller) {
         return LoadingStateWidget(
@@ -44,11 +46,12 @@ class _PopupScreenState extends State<PopupScreen> {
                   children: [
                     Image.asset(
                       ImageAssets.download,
-                      scale: 5,package: 'siarashield_flutter',
+                      scale: 5,
+                      package: 'siarashield_flutter',
                     ),
                     GestureDetector(
                         onTap: () {
-                          Get.back();
+                          Navigator.pop(context, false);
                         },
                         child: const Icon(
                           Icons.close,
@@ -96,7 +99,7 @@ class _PopupScreenState extends State<PopupScreen> {
                   children: [
                     Expanded(
                       child: controller.isOtherLoading.value
-                          ? const LoadingWidget2()
+                          ? const LoadingWidget()
                           : SizedBox(
                               height: 50,
                               child: cachedImageForItem(
@@ -111,7 +114,8 @@ class _PopupScreenState extends State<PopupScreen> {
                     ),
                     InkWell(
                       onTap: () {
-                        controller.getCaptcha(height: screenHeight(context), width: screenWidth(context), visiterId: widget.visiterId,cieraModel: widget.cieraModel);
+                        controller.getCaptcha(
+                            height: screenHeight(context), width: screenWidth(context), visiterId: widget.visiterId, cieraModel: widget.cieraModel);
                       },
                       child: const Icon(
                         Icons.refresh,
@@ -161,14 +165,19 @@ class _PopupScreenState extends State<PopupScreen> {
                             return;
                           }
 
-                          await controller.submitCaptcha(requestId: widget.requestId, visiterId: widget.visiterId, txt: _txtUsername.text,cieraModel: widget.cieraModel);
+                          await controller.submitCaptcha(
+                              requestId: widget.requestId, visiterId: widget.visiterId, txt: _txtUsername.text, cieraModel: widget.cieraModel);
                           if (controller.isSuccess.value) {
-
-                            if (context.mounted)  Navigator.pop(context,true);
-
+                            widget.loginTap(true);
+                            if (context.mounted) Navigator.pop(context, true);
                           } else {
-                            toast("You have enter wrong code"); if (!context.mounted) return;
-                            controller.getCaptcha(height: screenHeight(context), width: screenWidth(context), visiterId: widget.visiterId,cieraModel: widget.cieraModel);
+                            toast("You have enter wrong code");
+                            if (!context.mounted) return;
+                            controller.getCaptcha(
+                                height: screenHeight(context),
+                                width: screenWidth(context),
+                                visiterId: widget.visiterId,
+                                cieraModel: widget.cieraModel);
                           }
                         },
                         title: "Submit"),

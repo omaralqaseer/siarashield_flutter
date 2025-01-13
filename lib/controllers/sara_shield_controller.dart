@@ -2,8 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_udid/flutter_udid.dart';
 import 'package:get/get.dart';
 import 'package:public_ip_address/public_ip_address.dart';
@@ -30,7 +29,7 @@ class SaraShieldController extends GetxController {
   String udid = "";
   RxBool isVerified = false.obs;
 
-  getMyDeviceInfo(double height, double width,CyberCieraModel cieraModel) async {
+  getMyDeviceInfo(double height, double width, CyberCieraModel cieraModel) async {
     isLoading(true);
     error("");
     apiError("");
@@ -50,8 +49,8 @@ class SaraShieldController extends GetxController {
       }
 
       Map<String, dynamic> map = {
-        "MasterUrlId":cieraModel.masterUrlId,// "VYz433DfqQ5LhBcgaamnbw4Wy4K9CyQT",
-        "RequestUrl":cieraModel.requestUrl,// "com.app.cyber_ceiara",
+        "MasterUrlId": cieraModel.masterUrlId, // "VYz433DfqQ5LhBcgaamnbw4Wy4K9CyQT",
+        "RequestUrl": cieraModel.requestUrl, // "com.app.cyber_ceiara",
         "BrowserIdentity": udid,
         "DeviceIp": deviceIp,
         "DeviceType": Platform.isAndroid ? "Android" : "ios",
@@ -88,62 +87,26 @@ class SaraShieldController extends GetxController {
     isOtherLoading(true);
     error("");
     apiError("");
-
+    Map<String, dynamic> map = {
+      "MasterUrl": cieraModel.masterUrlId,
+      "BrowserIdentity": udid,
+      "DeviceIp": deviceIp,
+      "DeviceName": deviceName,
+      // "DeviceType": Platform.isAndroid ? "Android" : "ios",
+      // "DeviceBrowser": 'Chrome',
+      "Protocol": "http",
+      "second": "5",
+      "RequestID": requestId.value,
+      "VisiterId": visiterId.value
+    };
     try {
-      Map<String, dynamic> map = {
-        "MasterUrl":cieraModel.masterUrlId,// "VYz433DfqQ5LhBcgaamnbw4Wy4K9CyQT",
-        "BrowserIdentity": udid,
-        "DeviceIp": deviceIp,
-        "DeviceName": deviceName,
-        // "DeviceType": Platform.isAndroid ? "Android" : "ios",
-        // "DeviceBrowser": 'Chrome',
-        "Protocol": "http",
-        "second": "5",
-        "RequestID": requestId.value,
-        "VisiterId": visiterId.value
-      };
-
       await postAPI(
           methodName: ApiConstant.verifiedSubmitForAndroid,
           param: map,
           callback: (value) async {
             Map<String, dynamic> valueMap = json.decode(value.response);
             if (valueMap["Message"] == "success") {
-              // Object? istrue= await showAnimatedDialog(
-              //   context: context,
-              //   alignment: Alignment.center,
-              //   animationType: DialogTransitionType.slideFromBottomFade,
-              //   curve: Curves.fastOutSlowIn,
-              //   duration: const Duration(milliseconds: 500),
-              //   builder: (BuildContext context) {
-              //     return PopupScreen(
-              //       VisiterId: visiterId.value,
-              //       requestId: requestId.value,
-              //     ).alertCard(context);
-              //   },
-              // );
-              // if(istrue==true){
-              //   isVerified(true);
-              // }
               isVerified(true);
-            } else {
-              Object? istrue = await showAnimatedDialog(
-                context: context,
-                alignment: Alignment.center,
-                animationType: DialogTransitionType.slideFromBottomFade,
-                curve: Curves.fastOutSlowIn,
-                duration: const Duration(milliseconds: 500),
-                builder: (BuildContext context) {
-                  return PopupScreen(
-                  cieraModel: cieraModel,
-                    visiterId: visiterId.value,
-                    requestId: requestId.value,
-                  ).alertCard(context);
-                },
-              );
-              if (istrue == true) {
-                isVerified(true);
-              }
             }
           });
     } catch (err) {
