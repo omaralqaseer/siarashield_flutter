@@ -8,7 +8,6 @@ screenHeight(BuildContext context) => MediaQuery.of(context).size.height;
 
 screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
 
-
 Future<bool?> toast(String txt) => Fluttertoast.showToast(
     msg: txt,
     toastLength: Toast.LENGTH_SHORT,
@@ -18,14 +17,16 @@ Future<bool?> toast(String txt) => Fluttertoast.showToast(
     textColor: AppColors.whiteColor,
     fontSize: 16.0);
 
-
-
 class LoadingWidget extends StatelessWidget {
   const LoadingWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: CircularProgressIndicator(color: AppColors.blueColor));
+    return const Center(
+        child: CircularProgressIndicator(
+      color: AppColors.blueColor,
+      strokeWidth: 3,
+    ));
   }
 }
 
@@ -51,7 +52,6 @@ Widget cachedImageForItem(String url, {double? height, double? width, BoxFit? bo
     errorWidget: (context, url, error) => const Icon(
           Icons.error,
         ));
-
 
 class AppButton extends StatelessWidget {
   final GestureTapCallback onTap;

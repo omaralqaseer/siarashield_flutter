@@ -25,6 +25,7 @@ Minimal example:
       cieraModel: CyberCieraModel(
       masterUrlId: 'GIGYGUgeyiy86786BJHBIY', //Master URl ID
       requestUrl: 'com.app.testapp' //Package name,
+      privateKey: "YUFRGF&31293", //Private Key
 ),
 ),
 ),

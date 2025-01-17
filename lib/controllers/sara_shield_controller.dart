@@ -1,18 +1,15 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_udid/flutter_udid.dart';
 import 'package:get/get.dart';
 import 'package:public_ip_address/public_ip_address.dart';
-import 'package:siarashield_flutter/application_constants/network_call.dart';
-import 'package:siarashield_flutter/common/extension_widget.dart';
+import 'package:siarashield_flutter/application_constants/dio_service.dart';
 
 import '../application_constants/app_constant.dart';
 import '../common/common_widgets.dart';
 import '../models/get_info_model.dart';
-import '../popup_screen.dart';
+import '../models/responseapi.dart';
 import '../siarashield_flutter.dart';
 
 class SaraShieldController extends GetxController {
@@ -60,20 +57,16 @@ class SaraShieldController extends GetxController {
         "DeviceWidth": width.round(),
       };
 
-      await postAPI(
-          methodName: ApiConstant.getCyberSiaraForAndroid,
-          param: map,
-          callback: (value) {
-            Map<String, dynamic> valueMap = json.decode(value.response);
-            if (valueMap["Message"] == "success") {
-              GetInfoModel getInfoModel = GetInfoModel.fromJson(valueMap);
-              requestId.value = getInfoModel.requestId;
-              visiterId.value = getInfoModel.visiterId;
-            } else {
-              apiError("Api Error");
-              toast(apiError.value.toString());
-            }
-          });
+      ResponseAPI responseAPI = await ApiManager.post(methodName: ApiConstant.getCyberSiaraForAndroid, params: map);
+      Map<String, dynamic> valueMap = (responseAPI.response);
+      if (valueMap["Message"] == "success") {
+        GetInfoModel getInfoModel = GetInfoModel.fromJson(valueMap);
+        requestId.value = getInfoModel.requestId;
+        visiterId.value = getInfoModel.visiterId;
+      } else {
+        apiError("Api Error");
+        toast(apiError.value.toString());
+      }
     } catch (err) {
       error(err.toString());
       toast(err.toString());
@@ -100,15 +93,11 @@ class SaraShieldController extends GetxController {
       "VisiterId": visiterId.value
     };
     try {
-      await postAPI(
-          methodName: ApiConstant.verifiedSubmitForAndroid,
-          param: map,
-          callback: (value) async {
-            Map<String, dynamic> valueMap = json.decode(value.response);
-            if (valueMap["Message"] == "success") {
-              isVerified(true);
-            }
-          });
+      ResponseAPI responseAPI = await ApiManager.post(methodName: ApiConstant.verifiedSubmitForAndroid, params: map);
+      Map<String, dynamic> valueMap = responseAPI.response;
+      if (valueMap["Message"] == "success") {
+        isVerified(true);
+      }
     } catch (err) {
       error(err.toString());
     } finally {

@@ -9,21 +9,17 @@ extension Background on Widget {
       );
 
   Widget alertCard(context) => AlertDialog(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        contentPadding: const EdgeInsets.only(left: 10, right: 10),
-        actionsPadding: const EdgeInsets.only(left: 10, right: 10),
-        insetPadding: const EdgeInsets.only(left: 10, right: 10),
-        actions: [
-          Container(
-              decoration: BoxDecoration(color: AppColors.whiteColor, borderRadius: BorderRadius.circular(10)),
-              margin: const EdgeInsets.only(right: 10),
-              width: double.infinity,
-              padding: const EdgeInsets.all(10),
-              child: putPadding(
-                20,
-                10,
-              ))
-        ],
-      );
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          contentPadding: EdgeInsets.zero,
+          actionsPadding: EdgeInsets.zero,
+          insetPadding: EdgeInsets.zero,
+          actions: [
+            Container(
+                decoration: BoxDecoration(color: AppColors.whiteColor, borderRadius: BorderRadius.circular(10)),
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                child: this),
+          ]);
 }

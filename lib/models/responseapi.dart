@@ -1,9 +1,9 @@
 class ResponseAPI {
   int code;
-  String response;
+  final Map<String, dynamic> response;
   bool? isError;
   dynamic isCacheError;
-  Error? error;
+  dynamic error;
 
   ResponseAPI(this.code, this.response, {this.isError, this.isCacheError, this.error});
 }

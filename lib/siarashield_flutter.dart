@@ -13,8 +13,9 @@ import 'controllers/sara_shield_controller.dart';
 class CyberCieraModel {
   late final String masterUrlId;
   late final String requestUrl;
+  late final String privateKey;
 
-  CyberCieraModel({required this.masterUrlId, required this.requestUrl});
+  CyberCieraModel({required this.masterUrlId, required this.requestUrl, required this.privateKey});
 }
 
 class SaraShieldWidget extends StatefulWidget {
@@ -39,48 +40,45 @@ class _SaraShieldWidgetState extends State<SaraShieldWidget> {
         return controller.isLoading.value
             ? const Center(child: LoadingWidget())
             : Container(
-
                     padding: const EdgeInsets.only(top: 5),
                     child: controller.isOtherLoading.value
                         ? const LoadingWidget()
                         : SizedBox(
-                      width: double.infinity,
-                          child: ElevatedButton(
-                              onPressed: () async {
-                                await controller.slideButton(context, widget.cieraModel);
-                                if (controller.isVerified.value) {
-                                  widget.loginTap(controller.isVerified.value);
-                                } else {
-                                  showCupertinoDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return PopupScreen(
-                                        cieraModel: widget.cieraModel,
-                                        visiterId: controller.visiterId.value,
-                                        requestId: controller.requestId.value,
-                                        loginTap: (val) {
-                                          // print("val====>${val}");
-                                          if (val == true) {
-                                            controller.isVerified.value = true;
-                                            widget.loginTap(controller.isVerified.value );
-                                          }
-                                        },
-                                      ).alertCard(context);
-                                    },
-                                  );
-                                }
-                              },
-
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.blueColor,
-                                  padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),
-                              child: const Text(
-                                "Submit",
-                                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15, color: AppColors.whiteColor),
-                                maxLines: 1,
-                              )),
-                        ))
+                            width: double.infinity,
+                            child: ElevatedButton(
+                                onPressed: () async {
+                                  await controller.slideButton(context, widget.cieraModel);
+                                  if (controller.isVerified.value) {
+                                    widget.loginTap(controller.isVerified.value);
+                                  } else {
+                                    showCupertinoDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return PopupScreen(
+                                          cieraModel: widget.cieraModel,
+                                          visiterId: controller.visiterId.value,
+                                          requestId: controller.requestId.value,
+                                          loginTap: (val) {
+                                            if (val == true) {
+                                              controller.isVerified.value = true;
+                                              widget.loginTap(controller.isVerified.value);
+                                            }
+                                          },
+                                        ).alertCard(context);
+                                      },
+                                    );
+                                  }
+                                },
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: AppColors.blueColor,
+                                    padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),
+                                child: const Text(
+                                  "Submit",
+                                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15, color: AppColors.whiteColor),
+                                  maxLines: 1,
+                                )),
+                          ))
                 .putPadding(2, 5);
       },
     );

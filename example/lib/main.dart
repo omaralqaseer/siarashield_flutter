@@ -20,7 +20,7 @@ class _MyAppState extends State<MyApp> {
   final border = OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: AppColors.greyColor));
   final TextStyle _hintStyle = const TextStyle(color: AppColors.greyColor, fontSize: 16, fontWeight: FontWeight.w500);
   final TextStyle _labelStyle = const TextStyle(color: AppColors.blueColor, fontSize: 16, fontWeight: FontWeight.w500);
-  final TextStyle _subtitle = TextStyle(color: AppColors.blackColor.withOpacity(0.8), fontSize: 15, fontWeight: FontWeight.w400);
+  final TextStyle _subtitle = const TextStyle(color: AppColors.greyColor, fontSize: 15, fontWeight: FontWeight.w400);
   bool isCheck = false;
   bool isSlide = false;
 
@@ -115,15 +115,13 @@ class _MyAppState extends State<MyApp> {
                 loginTap: (bool isSuccess) {
                   if (isSuccess) {
                     //To-Do On Success
-                    toast("Success");
-                    print("Tapped==>$isSuccess");
                   }
                 },
                 cieraModel: CyberCieraModel(
-                    masterUrlId: 'VYz433DfqQ5LhBcgaamnbw4Wy4K9CyQT', //Master URl ID
-                    requestUrl: 'com.app.cyber_ceiara' //Package name,
-
-                    ),
+                  masterUrlId: 'VYz433DfqQ5LhBcgaamnbw4Wy4K9CyQT', //Master URl ID
+                  requestUrl: 'com.app.cyber_ceiara', //Package name,
+                  privateKey: "1AnVf4WsYsbyDRflfBInOe42vTnnMxbu", //Private Key
+                ),
               ),
             ),
           ],
