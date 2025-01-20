@@ -1,13 +1,15 @@
+import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:siarashield_flutter/common/extension_widget.dart';
+import 'package:siarashield_flutter/constants/app_constant.dart';
 import 'package:siarashield_flutter/popup_screen.dart';
 
-import 'application_constants/app_constant.dart';
 import 'common/common_widgets.dart';
+import 'constants/shared_prefrence_storage.dart';
 import 'controllers/sara_shield_controller.dart';
 
 class CyberCieraModel {
@@ -29,12 +31,35 @@ class SaraShieldWidget extends StatefulWidget {
 }
 
 class _SaraShieldWidgetState extends State<SaraShieldWidget> {
+  Future<bool> checkStorage() async {
+    bool isVerified = false;
+    try {
+      Map<String, dynamic>? token = await getToken();
+      if (token == null || token.isEmpty) {
+        setToken({"Token": widget.cieraModel.privateKey, "isVerified": false});
+      } else if (token["Token"] == widget.cieraModel.privateKey && token["isVerified"] == true) {
+        isVerified = true;
+      } else if (token["Token"] == widget.cieraModel.privateKey && token["isVerified"] == false) {
+        isVerified = false;
+      } else if (token["Token"] != widget.cieraModel.privateKey) {
+        setToken({"Token": widget.cieraModel.privateKey, "isVerified": false});
+        isVerified = false;
+      }
+    } catch (e) {
+      log("err==>±$e");
+    }
+    return isVerified;
+  }
+  // SaraShieldController controller = Get.put(SaraShieldController());
+
   @override
   Widget build(BuildContext context) {
     return GetX<SaraShieldController>(
       init: SaraShieldController(),
       initState: (val) {
-        val.controller?.getMyDeviceInfo(screenHeight(context), screenWidth(context), widget.cieraModel);
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          val.controller?.getMyDeviceInfo(screenHeight(context), screenWidth(context), widget.cieraModel);
+        });
       },
       builder: (controller) {
         return controller.isLoading.value
@@ -47,10 +72,17 @@ class _SaraShieldWidgetState extends State<SaraShieldWidget> {
                             width: double.infinity,
                             child: ElevatedButton(
                                 onPressed: () async {
+                                  bool isVerified = await checkStorage();
+                                  if (isVerified) {
+                                    widget.loginTap(true);
+                                    return;
+                                  }
+                                  if (!context.mounted) return;
                                   await controller.slideButton(context, widget.cieraModel);
                                   if (controller.isVerified.value) {
-                                    widget.loginTap(controller.isVerified.value);
-                                  } else {
+                                    setToken({"Token": widget.cieraModel.privateKey, "isVerified": true});
+                                  } else if (!controller.isVerified.value && controller.apiError.value.isEmpty) {
+                                    if (!context.mounted) return;
                                     showCupertinoDialog(
                                       context: context,
                                       builder: (BuildContext context) {
@@ -61,7 +93,7 @@ class _SaraShieldWidgetState extends State<SaraShieldWidget> {
                                           loginTap: (val) {
                                             if (val == true) {
                                               controller.isVerified.value = true;
-                                              widget.loginTap(controller.isVerified.value);
+                                              setToken({"Token": widget.cieraModel.privateKey, "isVerified": true});
                                             }
                                           },
                                         ).alertCard(context);
@@ -82,6 +114,12 @@ class _SaraShieldWidgetState extends State<SaraShieldWidget> {
                 .putPadding(2, 5);
       },
     );
+  }
+
+  @override
+  void dispose() {
+    Get.delete<SaraShieldController>();
+    super.dispose();
   }
 }
 

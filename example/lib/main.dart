@@ -1,11 +1,17 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:siarashield_flutter/application_constants/app_constant.dart';
+import 'package:get/get.dart';
 import 'package:siarashield_flutter/common/common_widgets.dart';
 import 'package:siarashield_flutter/common/extension_widget.dart';
+import 'package:siarashield_flutter/constants/app_constant.dart';
 import 'package:siarashield_flutter/siarashield_flutter.dart';
+import 'package:siarashield_flutter_example/second_screen.dart';
+
+import 'app_colors.dart';
 
 void main() {
-  runApp(const MaterialApp(home: MyApp()));
+  runApp(const GetMaterialApp(home: MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -17,21 +23,22 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final TextEditingController _txtUsername = TextEditingController();
-  final border = OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: AppColors.greyColor));
-  final TextStyle _hintStyle = const TextStyle(color: AppColors.greyColor, fontSize: 16, fontWeight: FontWeight.w500);
-  final TextStyle _labelStyle = const TextStyle(color: AppColors.blueColor, fontSize: 16, fontWeight: FontWeight.w500);
-  final TextStyle _subtitle = const TextStyle(color: AppColors.greyColor, fontSize: 15, fontWeight: FontWeight.w400);
+  final TextEditingController _password = TextEditingController();
+  final border = OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: AppColors1.greyColor));
+  final TextStyle _hintStyle = const TextStyle(color: AppColors1.greyColor, fontSize: 16, fontWeight: FontWeight.w500);
+  final TextStyle _labelStyle = const TextStyle(color: AppColors1.blueColor, fontSize: 16, fontWeight: FontWeight.w500);
+  final TextStyle _subtitle = const TextStyle(color: AppColors1.greyColor, fontSize: 15, fontWeight: FontWeight.w400);
   bool isCheck = false;
   bool isSlide = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.whiteColor,
+      backgroundColor: AppColors1.whiteColor,
       body: Container(
         margin: EdgeInsets.only(top: screenHeight(context) * 0.15, right: 15, left: 15),
         decoration: const BoxDecoration(
-            color: AppColors.whiteColor,
+            color: AppColors1.whiteColor,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(5),
               topRight: Radius.circular(5),
@@ -51,7 +58,7 @@ class _MyAppState extends State<MyApp> {
             ),
             TextFormField(
                 controller: _txtUsername,
-                cursorColor: AppColors.blackColor,
+                cursorColor: AppColors1.blackColor,
                 style: _labelStyle,
                 textInputAction: TextInputAction.done,
                 decoration: InputDecoration(
@@ -66,14 +73,15 @@ class _MyAppState extends State<MyApp> {
                     labelStyle: _labelStyle,
                     suffixIcon: Icon(
                       Icons.email_outlined,
-                      color: AppColors.yellowColor,
+                      color: AppColors1.yellowColor,
                     ))).putPadding(15, 15),
             const SizedBox(
               height: 15,
             ),
             TextFormField(
-                controller: _txtUsername,
-                cursorColor: AppColors.blackColor,
+                controller: _password,
+                obscureText: true,
+                cursorColor: AppColors1.blackColor,
                 style: _labelStyle,
                 textInputAction: TextInputAction.done,
                 decoration: InputDecoration(
@@ -88,7 +96,7 @@ class _MyAppState extends State<MyApp> {
                     labelStyle: _labelStyle,
                     suffixIcon: Icon(
                       Icons.lock,
-                      color: AppColors.yellowColor,
+                      color: AppColors1.yellowColor,
                     ))).putPadding(15, 15),
             const SizedBox(
               height: 10,
@@ -114,7 +122,21 @@ class _MyAppState extends State<MyApp> {
               child: SaraShieldWidget(
                 loginTap: (bool isSuccess) {
                   if (isSuccess) {
-                    //To-Do On Success
+                    // Handle successful authentication
+                    log("Authentication Successful: \$isSuccess");
+
+                    if (_txtUsername.text.isEmpty) {
+                      toast("Email can't be empty");
+                      return;
+                    }
+                    if (_password.text.isEmpty) {
+                      toast("Password can't be empty");
+                      return;
+                    }
+                    Get.to(() => const SecondScreen());
+                  } else {
+                    // Handle authentication failure
+                    log("Authentication Failed");
                   }
                 },
                 cieraModel: CyberCieraModel(

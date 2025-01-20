@@ -1,8 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
-import '../application_constants/app_constant.dart';
+import 'package:siarashield_flutter/constants/app_constant.dart';
 
 screenHeight(BuildContext context) => MediaQuery.of(context).size.height;
 

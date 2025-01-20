@@ -4,9 +4,9 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_udid/flutter_udid.dart';
 import 'package:get/get.dart';
 import 'package:public_ip_address/public_ip_address.dart';
+import 'package:siarashield_flutter/constants/app_constant.dart';
+import 'package:siarashield_flutter/constants/dio_service.dart';
 
-import '../application_constants/app_constant.dart';
-import '../application_constants/dio_service.dart';
 import '../common/common_widgets.dart';
 import '../models/responseapi.dart';
 import '../siarashield_flutter.dart';
@@ -63,17 +63,6 @@ class PopupController extends GetxController {
       } else {
         toast("Api Error");
       }
-      // await postAPI(
-      //     methodName: ApiConstant.captchaForAndroid,
-      //     param: map,
-      //     callback: (value) {
-      //       Map<String, dynamic> valueMap = json.decode(value.response);
-      //       if (valueMap["Message"] == "success") {
-      //         captchaUrl(valueMap["HtmlFormate"]);
-      //       } else {
-      //         toast("Api Error");
-      //       }
-      //     });
     } catch (err) {
       error(err.toString());
       toast(error.value);
@@ -85,11 +74,10 @@ class PopupController extends GetxController {
   Future<bool> submitCaptcha({required String txt, required String requestId, required String visiterId, required CyberCieraModel cieraModel}) async {
     isLoading(true);
     error("");
-
     bool isSuccess = false;
     try {
       Map<String, dynamic> map = {
-        "MasterUrl": cieraModel.masterUrlId, // "VYz433DfqQ5LhBcgaamnbw4Wy4K9CyQT",
+        "MasterUrl": cieraModel.masterUrlId,
         "DeviceIp": deviceIp,
         "DeviceType": Platform.isAndroid ? "Android" : "ios",
         "DeviceName": deviceName,
@@ -108,11 +96,16 @@ class PopupController extends GetxController {
       Map<String, dynamic> valueMap = (responseAPI.response);
       if (valueMap["Message"] == "success") {
         bool success = await validateToken(valueMap["data"], cieraModel);
-        isSuccess = success;
-      } else {}
+        if (success) {
+          isSuccess = success;
+        } else {
+          error("We cannot verify your private key.");
+        }
+      } else {
+        error("You have enter wrong code");
+      }
     } catch (err) {
       error(err.toString());
-      // toast(error.value);
     } finally {
       isLoading(false);
     }

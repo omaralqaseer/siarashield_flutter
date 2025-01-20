@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:siarashield_flutter/application_constants/app_constant.dart';
+import 'package:siarashield_flutter/constants/app_constant.dart';
 
 import 'common/common_widgets.dart';
 import 'controllers/popoup_controller.dart';
@@ -21,9 +21,9 @@ class PopupScreen extends StatefulWidget {
 
 class _PopupScreenState extends State<PopupScreen> {
   final TextStyle _t1 = const TextStyle(color: AppColors.blackColor, fontSize: 13, fontWeight: FontWeight.w500);
-  String dropdownvalue = "English";
-  var items = ["English", "Hindi"];
-  final TextEditingController _txtUsername = TextEditingController();
+
+  final TextEditingController _codeTxtEditingController = TextEditingController();
+
   final border = OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: AppColors.greyColor));
 
   @override
@@ -102,24 +102,25 @@ class _PopupScreenState extends State<PopupScreen> {
                       child: SizedBox(
                         height: 45,
                         child: TextFormField(
-                            controller: _txtUsername,
+                            controller: _codeTxtEditingController,
                             cursorColor: AppColors.blackColor,
                             textInputAction: TextInputAction.done,
                             style: const TextStyle(fontSize: 18),
                             maxLength: 4,
                             maxLengthEnforcement: MaxLengthEnforcement.none,
                             buildCounter: (context, {required currentLength, required isFocused, required maxLength}) => null,
-                            // Removes the counter
-
                             onChanged: (val) async {
                               if (val.length == 4) {
                                 bool isSuccess = await controller.submitCaptcha(
-                                    requestId: widget.requestId, visiterId: widget.visiterId, txt: _txtUsername.text, cieraModel: widget.cieraModel);
+                                    requestId: widget.requestId,
+                                    visiterId: widget.visiterId,
+                                    txt: _codeTxtEditingController.text,
+                                    cieraModel: widget.cieraModel);
                                 if (isSuccess) {
                                   widget.loginTap(true);
                                   if (context.mounted) Navigator.pop(context, true);
                                 } else {
-                                  toast("You have enter wrong code");
+                                  toast(controller.error.value);
                                   if (!context.mounted) return;
                                   controller.getCaptcha(
                                       height: screenHeight(context),
@@ -209,5 +210,11 @@ class _PopupScreenState extends State<PopupScreen> {
         );
       },
     );
+  }
+
+  @override
+  void dispose() {
+    Get.delete<PopupController>();
+    super.dispose();
   }
 }

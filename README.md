@@ -1,35 +1,67 @@
-# siarashield_flutter
+# SiaraShield Flutter
 
-To authenticate using siarashield
+siarashield_flutter is a package that enables authentication using SiaraShield in Flutter applications.
 
+## Getting Started
 
-## Getting started
+To use this package, add `siarashield_flutter` as a dependency in your `pubspec.yaml` file.
 
-To use this package, add siarashield_flutter as a dependency in your pubspec.yaml file.
+### Installation
+
+Add the following line to your `pubspec.yaml`:
+
+```yaml
+dependencies:
+  siarashield_flutter: latest_version
+```
+
+Then, run:
+
+```sh
+flutter pub get
+```
 
 ## Usage
-This MasterUrlId you will  get from this webist when you add your package name.
 
-https://mycybersiara.com/
+To authenticate using SiaraShield, you need a `MasterUrlId`, which can be obtained from the [SiaraShield Portal](https://mycybersiara.com/) after registering your package name.
 
-Minimal example:
+### Minimal Example
 
 ```dart
-    SaraShieldWidget(
-    loginTap: (bool isSuccess) {
-      if (isSuccess) {
-          //To-Do On Success
-        print("Tapped==>$isSuccess");
-        }
-      },
-      cieraModel: CyberCieraModel(
-      masterUrlId: 'GIGYGUgeyiy86786BJHBIY', //Master URl ID
-      requestUrl: 'com.app.testapp' //Package name,
-      privateKey: "YUFRGF&31293", //Private Key
-),
-),
+import 'package:siarashield_flutter/siarashield_flutter.dart';
+
+SaraShieldWidget(
+  loginTap: (bool isSuccess) {
+    if (isSuccess) {
+      // Handle successful authentication
+      print("Authentication Successful: \$isSuccess");
+    } else {
+      // Handle authentication failure
+      print("Authentication Failed");
+    }
+  },
+  cieraModel: CyberCieraModel(
+    masterUrlId: 'TEST-CYBERSIARA', // Master URL ID
+    requestUrl: 'com.app.testapp', // Package name
+    privateKey: 'TEST-CYBERSIARA', // Private Key
+  ),
 ),
 ```
 
+## Parameters
 
+| Parameter      | Type      | Description |
+|---------------|----------|-------------|
+| `loginTap`    | Function | Callback function that returns `true` on successful authentication and `false` otherwise. |
+| `masterUrlId` | String   | The Master URL ID obtained from SiaraShield Portal. |
+| `requestUrl`  | String   | The package name registered with SiaraShield. |
+| `privateKey`  | String   | The private key used for authentication. |
+
+## Additional Information
+
+For more details, visit the [SiaraShield Portal](https://mycybersiara.com/) or refer to the official documentation.
+
+---
+
+**Note:** Ensure that you handle authentication responses securely and follow best practices for storing sensitive credentials in your application.
 
