@@ -23,3 +23,7 @@
 ## 0.0.6
 
 * TODO: Changed Design to Submit button and Upgrade the packages
+
+## 0.0.7
+
+* TODO: Bug Fixing and Code Improvements
