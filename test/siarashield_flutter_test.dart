@@ -6,13 +6,13 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 class MockSiarashieldFlutterPlatform
     with MockPlatformInterfaceMixin
     implements SiarashieldFlutterPlatform {
-
   @override
   Future<String?> getPlatformVersion() => Future.value('42');
 }
 
 void main() {
-  final SiarashieldFlutterPlatform initialPlatform = SiarashieldFlutterPlatform.instance;
+  final SiarashieldFlutterPlatform initialPlatform =
+      SiarashieldFlutterPlatform.instance;
 
   test('$MethodChannelSiarashieldFlutter is the default instance', () {
     expect(initialPlatform, isInstanceOf<MethodChannelSiarashieldFlutter>());

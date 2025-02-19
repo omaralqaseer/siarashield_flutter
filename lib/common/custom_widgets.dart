@@ -33,24 +33,31 @@ class LoadingStateWidget extends StatelessWidget {
   final Widget child;
   final bool isLoading;
 
-  const LoadingStateWidget({required this.isLoading, required this.child, super.key});
+  const LoadingStateWidget(
+      {required this.isLoading, required this.child, super.key});
 
   @override
   Widget build(BuildContext context) {
     return IgnorePointer(
-        ignoring: isLoading, child: Stack(alignment: Alignment.center, children: [child, isLoading ? const LoadingWidget() : const SizedBox()]));
+        ignoring: isLoading,
+        child: Stack(alignment: Alignment.center, children: [
+          child,
+          isLoading ? const LoadingWidget() : const SizedBox()
+        ]));
   }
 }
 
-Widget cachedImageForItem(String url, {double? height, double? width, BoxFit? boxFit}) => CachedNetworkImage(
-    imageUrl: url,
-    height: height,
-    width: width,
-    fit: boxFit,
-    placeholder: (context, url) => const LoadingWidget(),
-    errorWidget: (context, url, error) => const Icon(
-          Icons.error,
-        ));
+Widget cachedImageForItem(String url,
+        {double? height, double? width, BoxFit? boxFit}) =>
+    CachedNetworkImage(
+        imageUrl: url,
+        height: height,
+        width: width,
+        fit: boxFit,
+        placeholder: (context, url) => const LoadingWidget(),
+        errorWidget: (context, url, error) => const Icon(
+              Icons.error,
+            ));
 
 class AppButton extends StatelessWidget {
   final GestureTapCallback onTap;
@@ -64,17 +71,23 @@ class AppButton extends StatelessWidget {
     return ElevatedButton(
         onPressed: onTap,
         style: ButtonStyle(
-          shape: WidgetStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
+          shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(7.0),
           )),
           shadowColor: WidgetStateProperty.all<Color>(AppColors.orangeColor),
           elevation: WidgetStateProperty.all<double>(0),
-          backgroundColor: WidgetStateProperty.all<Color>(AppColors.orangeColor),
-          padding: WidgetStateProperty.all<EdgeInsetsGeometry>(const EdgeInsets.symmetric(vertical: 15, horizontal: 15)),
+          backgroundColor:
+              WidgetStateProperty.all<Color>(AppColors.orangeColor),
+          padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+              const EdgeInsets.symmetric(vertical: 15, horizontal: 15)),
         ),
         child: Text(title,
             textAlign: TextAlign.center,
             maxLines: 1,
-            style: const TextStyle(fontWeight: FontWeight.w600, color: AppColors.whiteColor, fontSize: 18)));
+            style: const TextStyle(
+                fontWeight: FontWeight.w600,
+                color: AppColors.whiteColor,
+                fontSize: 18)));
   }
 }

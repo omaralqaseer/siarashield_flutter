@@ -8,7 +8,8 @@ abstract class SiarashieldFlutterPlatform extends PlatformInterface {
 
   static final Object _token = Object();
 
-  static SiarashieldFlutterPlatform _instance = MethodChannelSiarashieldFlutter();
+  static SiarashieldFlutterPlatform _instance =
+      MethodChannelSiarashieldFlutter();
 
   /// The default instance of [SiarashieldFlutterPlatform] to use.
   ///

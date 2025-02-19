@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:siarashield_flutter/common/common_widgets.dart';
+import 'package:siarashield_flutter/common/custom_widgets.dart';
 
 import 'main.dart';
 
@@ -22,7 +22,7 @@ class _SecondScreenState extends State<SecondScreen> {
           Center(
             child: AppButton(
                 onTap: () {
-                  Get.offAll(() => MyApp());
+                  Get.offAll(() => const MyApp());
                 },
                 title: "Logout"),
           ),

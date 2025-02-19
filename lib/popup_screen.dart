@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:siarashield_flutter/constants/app_constant.dart';
 
-import 'common/common_widgets.dart';
+import 'common/custom_widgets.dart';
 import 'controllers/popoup_controller.dart';
 import 'siarashield_flutter.dart';
 
@@ -85,8 +85,7 @@ class _PopupScreenState extends State<PopupScreen> {
                       flex: 1,
                       child: InkWell(
                         onTap: () {
-                          controller.getCaptcha(
-                              height: screenHeight(context), width: screenWidth(context), visiterId: widget.visiterId, cieraModel: widget.cieraModel);
+                          _changeCaptcha(controller);
                         },
                         child: Image.asset(ImageAssets.refreshIcon, scale: 2.5, package: 'siarashield_flutter'),
                       ),
@@ -110,25 +109,7 @@ class _PopupScreenState extends State<PopupScreen> {
                             maxLengthEnforcement: MaxLengthEnforcement.none,
                             buildCounter: (context, {required currentLength, required isFocused, required maxLength}) => null,
                             onChanged: (val) async {
-                              if (val.length == 4) {
-                                bool isSuccess = await controller.submitCaptcha(
-                                    requestId: widget.requestId,
-                                    visiterId: widget.visiterId,
-                                    txt: _codeTxtEditingController.text,
-                                    cieraModel: widget.cieraModel);
-                                if (isSuccess) {
-                                  widget.loginTap(true);
-                                  if (context.mounted) Navigator.pop(context, true);
-                                } else {
-                                  toast(controller.error.value);
-                                  if (!context.mounted) return;
-                                  controller.getCaptcha(
-                                      height: screenHeight(context),
-                                      width: screenWidth(context),
-                                      visiterId: widget.visiterId,
-                                      cieraModel: widget.cieraModel);
-                                }
-                              }
+                              _onCaptchaComplete(val, controller);
                             },
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.only(left: 10),
@@ -146,36 +127,6 @@ class _PopupScreenState extends State<PopupScreen> {
                 const SizedBox(
                   height: 12,
                 ),
-                // Center(
-                //   child: SizedBox(
-                //     width: 200,
-                //     child: AppButton(
-                //         onTap: () async {
-                //           if (_txtUsername.text.isEmpty) {
-                //             return;
-                //           }
-                //
-                //           await controller.submitCaptcha(
-                //               requestId: widget.requestId, visiterId: widget.visiterId, txt: _txtUsername.text, cieraModel: widget.cieraModel);
-                //           if (controller.isSuccess.value) {
-                //             widget.loginTap(true);
-                //             if (context.mounted) Navigator.pop(context, true);
-                //           } else {
-                //             toast("You have enter wrong code");
-                //             if (!context.mounted) return;
-                //             controller.getCaptcha(
-                //                 height: screenHeight(context),
-                //                 width: screenWidth(context),
-                //                 visiterId: widget.visiterId,
-                //                 cieraModel: widget.cieraModel);
-                //           }
-                //         },
-                //         title: "Submit"),
-                //   ),
-                // ),
-                // const SizedBox(
-                //   height: 25,
-                // ),
                 Center(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -210,6 +161,35 @@ class _PopupScreenState extends State<PopupScreen> {
         );
       },
     );
+  }
+
+  /// Handles the completion of the captcha input process and verifies the entered code.
+  _onCaptchaComplete(String val, PopupController controller) async {
+    /// Check if the entered captcha code has exactly 4 characters.
+    if (val.length == 4) {
+      bool isSuccess = await controller.submitCaptcha(
+          requestId: widget.requestId, visiterId: widget.visiterId, txt: _codeTxtEditingController.text, cieraModel: widget.cieraModel);
+
+      /// If the captcha is successfully verified:
+      if (isSuccess) {
+        /// Trigger the login callback with `true` indicating successful verification.
+        widget.loginTap(true);
+        if (context.mounted) Navigator.pop(context, true);
+      } else {
+        toast(controller.error.value);
+        if (!context.mounted) return;
+
+        /// Reload the captcha with updated parameters to allow the user to retry.
+        controller.getCaptcha(height: screenHeight(context), width: screenWidth(context), visiterId: widget.visiterId, cieraModel: widget.cieraModel);
+      }
+    }
+  }
+
+  /// Requests a new captcha from the server to replace the current one.
+  /// This is triggered when the user enters an incorrect captcha code,
+  /// allowing them to retry with a fresh challenge.
+  _changeCaptcha(PopupController controller) {
+    controller.getCaptcha(height: screenHeight(context), width: screenWidth(context), visiterId: widget.visiterId, cieraModel: widget.cieraModel);
   }
 
   @override

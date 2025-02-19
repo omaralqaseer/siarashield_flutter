@@ -27,3 +27,7 @@
 ## 0.0.7
 
 * TODO: Bug Fixing and Code Improvements
+
+## 0.0.8
+
+* TODO: Comments Are Added for better understanding

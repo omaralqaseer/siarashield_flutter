@@ -22,7 +22,7 @@ class GetInfoModel {
   // late final Null VisiterLanguage;
   late final String visiterId;
 
-  GetInfoModel.fromJson(Map<String, dynamic> json){
+  GetInfoModel.fromJson(Map<String, dynamic> json) {
     // HttpStatusCode = json['HttpStatusCode'];
     // Message = json['Message'];
     // data = Data.fromJson(json['data']);

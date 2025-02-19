@@ -1,25 +1,31 @@
 import 'package:flutter/material.dart';
 
+/// A class that contains constant API endpoint paths for the application.
+///
+/// This class defines the base URL and various API endpoints used for
+/// interacting with the CyberSiara service.
 abstract class ApiConstant {
-  // static String baseUrl ="https://invisiblecaptcha.embed.mycybersiara.com/api/";
-  // static String baseUrl ="https://embed.mycybersiara.com/api/";
+  /// The base URL for API requests.
   static String baseUrl = "https://embed.mycybersiara.com/api/";
 
+  /// Endpoint to retrieve CyberSiara configuration for Android devices.
   static String getCyberSiaraForAndroid = "CyberSiara/GetCyberSiaraForAndroid";
 
+  /// Endpoint to submit a verified captcha response for Android devices.
   static String verifiedSubmitForAndroid = "SubmitCaptcha/VerifiedSubmitForAndroid";
 
-  //if successfull  to display login button
-
-  //if fail then display on the model
+  /// Endpoint to generate a captcha for Android devices.
   static String captchaForAndroid = "GenerateCaptcha/CaptchaForAndroid";
 
+  /// Endpoint to submit captcha information for Android devices.
   static String submitCaptchInfoForAndroid = "SubmitCaptcha/SubmitCaptchInfoForAndroid";
+
+  /// Endpoint to validate authentication tokens.
   static String validateToken = "validate-token";
 }
 
 abstract class ImageAssets {
-  // /Users/apple/Desktop/andrew projects/siarashield_flutter/assets
+  ImageAssets._();
   static const String asset = "assets/";
   static const String checkCircle = "${asset}check-circle.gif";
   static const String close = "${asset}close.png";
