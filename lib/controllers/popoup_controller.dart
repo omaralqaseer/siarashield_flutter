@@ -62,7 +62,7 @@ class PopupController extends GetxController {
   /// Returns:
   /// - Updates the `captchaUrl` observable with the CAPTCHA HTML.
   /// - Displays an error toast in case of failure.
-  getCaptcha({required double height, required double width, required String visiterId, required CyberCieraModel cieraModel}) async {
+  getCaptcha({required double height, required double width, required String visiterId, required CyberSiaraModel cieraModel}) async {
     isOtherLoading(true);
     error("");
     captchaUrl("");
@@ -140,7 +140,7 @@ class PopupController extends GetxController {
   /// Returns:
   /// - `true` if CAPTCHA validation and token verification succeed.
   /// - `false` otherwise.
-  Future<bool> submitCaptcha({required String txt, required String requestId, required String visiterId, required CyberCieraModel cieraModel}) async {
+  Future<bool> submitCaptcha({required String txt, required String requestId, required String visiterId, required CyberSiaraModel cieraModel}) async {
     isLoading(true);
     error("");
     bool isSuccess = false;
@@ -202,7 +202,7 @@ class PopupController extends GetxController {
   /// Returns:
   /// - `true` if the token is successfully validated.
   /// - `false` in case of failure or an error.
-  Future<bool> validateToken(String bearerToken, CyberCieraModel cieraModel) async {
+  Future<bool> validateToken(String bearerToken, CyberSiaraModel cieraModel) async {
     bool isSuccess = false;
     try {
       ResponseAPI responseAPI =

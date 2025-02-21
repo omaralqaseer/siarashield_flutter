@@ -30,7 +30,7 @@ To authenticate using SiaraShield, you need a `MasterUrlId`, which can be obtain
 ```dart
 import 'package:siarashield_flutter/siarashield_flutter.dart';
 
-SaraShieldWidget(
+CyberSiaraWidget(
   loginTap: (bool isSuccess) {
     if (isSuccess) {
       // Handle successful authentication
@@ -40,7 +40,7 @@ SaraShieldWidget(
       print("Authentication Failed");
     }
   },
-  cieraModel: CyberCieraModel(
+  cyberSiaraModel: CyberSiaraModel(
     masterUrlId: 'TEST-CYBERSIARA', // Master URL ID
     requestUrl: 'com.app.testapp', // Package name
     privateKey: 'TEST-CYBERSIARA', // Private Key

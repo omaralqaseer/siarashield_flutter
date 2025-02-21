@@ -13,7 +13,7 @@ import 'constants/shared_prefrence_storage.dart';
 import 'controllers/sara_shield_controller.dart';
 
 /// A model class representing the CyberCiera authentication details.
-class CyberCieraModel {
+class CyberSiaraModel {
   /// A unique identifier for the master URL.
   late final String masterUrlId;
 
@@ -28,24 +28,24 @@ class CyberCieraModel {
   /// - [masterUrlId]: A unique identifier for the master URL.
   /// - [requestUrl]: The API request URL.
   /// - [privateKey]: A private key used for authentication.
-  CyberCieraModel({
+  CyberSiaraModel({
     required this.masterUrlId,
     required this.requestUrl,
     required this.privateKey,
   });
 }
 
-class SaraShieldWidget extends StatefulWidget {
-  final CyberCieraModel cieraModel;
+class CyberSiaraWidget extends StatefulWidget {
+  final CyberSiaraModel cyberSiaraModel;
   final Function(bool isTrue) loginTap;
 
-  const SaraShieldWidget({super.key, required this.cieraModel, required this.loginTap});
+  const CyberSiaraWidget({super.key, required this.cyberSiaraModel, required this.loginTap});
 
   @override
-  State<SaraShieldWidget> createState() => _SaraShieldWidgetState();
+  State<CyberSiaraWidget> createState() => _CyberSiaraWidgetState();
 }
 
-class _SaraShieldWidgetState extends State<SaraShieldWidget> {
+class _CyberSiaraWidgetState extends State<CyberSiaraWidget> {
   /// Checks the stored authentication token and its verification status.
   ///
   /// This function retrieves a stored token from local storage and determines
@@ -62,19 +62,19 @@ class _SaraShieldWidgetState extends State<SaraShieldWidget> {
 
       // If no token exists, store a new one with the private key and set verification to false.
       if (token == null || token.isEmpty) {
-        setToken({"Token": widget.cieraModel.privateKey, "isVerified": false});
+        setToken({"Token": widget.cyberSiaraModel.privateKey, "isVerified": false});
       }
       // If the stored token matches the expected private key and is verified, return true.
-      else if (token["Token"] == widget.cieraModel.privateKey && token["isVerified"] == true) {
+      else if (token["Token"] == widget.cyberSiaraModel.privateKey && token["isVerified"] == true) {
         isVerified = true;
       }
       // If the stored token matches the private key but is not verified, return false.
-      else if (token["Token"] == widget.cieraModel.privateKey && token["isVerified"] == false) {
+      else if (token["Token"] == widget.cyberSiaraModel.privateKey && token["isVerified"] == false) {
         isVerified = false;
       }
       // If the stored token does not match the private key, update storage and return false.
-      else if (token["Token"] != widget.cieraModel.privateKey) {
-        setToken({"Token": widget.cieraModel.privateKey, "isVerified": false});
+      else if (token["Token"] != widget.cyberSiaraModel.privateKey) {
+        setToken({"Token": widget.cyberSiaraModel.privateKey, "isVerified": false});
         isVerified = false;
       }
     } catch (e) {
@@ -92,7 +92,7 @@ class _SaraShieldWidgetState extends State<SaraShieldWidget> {
       init: SaraShieldController(),
       initState: (val) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          val.controller?.getMyDeviceInfo(screenHeight(context), screenWidth(context), widget.cieraModel);
+          val.controller?.getMyDeviceInfo(screenHeight(context), screenWidth(context), widget.cyberSiaraModel);
         });
       },
       builder: (controller) {
@@ -137,11 +137,11 @@ class _SaraShieldWidgetState extends State<SaraShieldWidget> {
     if (!context.mounted) return;
 
     /// Attempt to verify the user using the slide button.
-    await controller.slideButton(context, widget.cieraModel);
+    await controller.slideButton(context, widget.cyberSiaraModel);
 
     if (controller.isVerified.value) {
       /// If the slide verification is successful, store the authentication token.
-      setToken({"Token": widget.cieraModel.privateKey, "isVerified": true});
+      setToken({"Token": widget.cyberSiaraModel.privateKey, "isVerified": true});
     }
 
     /// If slide verification fails and there is no API error, trigger the captcha popup.
@@ -156,7 +156,7 @@ class _SaraShieldWidgetState extends State<SaraShieldWidget> {
         context: context,
         builder: (BuildContext context) {
           return PopupScreen(
-            cieraModel: widget.cieraModel,
+            cieraModel: widget.cyberSiaraModel,
             visiterId: controller.visiterId.value,
             requestId: controller.requestId.value,
             loginTap: (val) {
@@ -164,7 +164,7 @@ class _SaraShieldWidgetState extends State<SaraShieldWidget> {
               /// and store the authentication token.
               if (val == true) {
                 controller.isVerified.value = true;
-                setToken({"Token": widget.cieraModel.privateKey, "isVerified": true});
+                setToken({"Token": widget.cyberSiaraModel.privateKey, "isVerified": true});
               }
             },
           ).alertCard(context);

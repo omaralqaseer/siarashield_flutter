@@ -119,7 +119,7 @@ class _MyAppState extends State<MyApp> {
             ).putPadding(15, 15),
             Padding(
               padding: const EdgeInsets.all(15.0),
-              child: SaraShieldWidget(
+              child: CyberSiaraWidget(
                 loginTap: (bool isSuccess) {
                   if (isSuccess) {
                     // Handle successful authentication
@@ -139,7 +139,7 @@ class _MyAppState extends State<MyApp> {
                     log("Authentication Failed");
                   }
                 },
-                cieraModel: CyberCieraModel(
+                cyberSiaraModel: CyberSiaraModel(
                   masterUrlId: 'VYz433DfqQ5LhBcgaamnbw4Wy4K9CyQT', //Master URl ID
                   requestUrl: 'com.app.cyber_ceiara', //Package name,
                   privateKey: "1AnVf4WsYsbyDRflfBInOe42vTnnMxbu", //Private Key

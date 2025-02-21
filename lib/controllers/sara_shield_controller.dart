@@ -51,7 +51,7 @@ class SaraShieldController extends GetxController {
   /// - Sends the request using `ApiManager.post()`.
   /// - Parses the response and updates `requestId` and `visiterId` on success.
   /// - Displays an error message if the API request fails.
-  getMyDeviceInfo(double height, double width, CyberCieraModel cieraModel) async {
+  getMyDeviceInfo(double height, double width, CyberSiaraModel cieraModel) async {
     isLoading(true);
     error("");
     apiError("");
@@ -123,7 +123,7 @@ class SaraShieldController extends GetxController {
   /// 6. If API response is `"fail"`, sets `isVerified` to `false`.
   /// 7. Handles API errors and unexpected exceptions, displaying appropriate error messages.
   /// 8. Resets `isOtherLoading` to `false` in the `finally` block.
-  slideButton(context, CyberCieraModel cieraModel) async {
+  slideButton(context, CyberSiaraModel cieraModel) async {
     isVerified(false);
     isOtherLoading(true);
     error("");
@@ -186,7 +186,7 @@ class SaraShieldController extends GetxController {
   /// Returns:
   /// - `true` if the token is verified.
   /// - `false` if verification fails or an error occurs.
-  Future<bool> validateToken(String bearerToken, CyberCieraModel cieraModel) async {
+  Future<bool> validateToken(String bearerToken, CyberSiaraModel cieraModel) async {
     bool isSuccess = false;
     try {
       ResponseAPI responseAPI =

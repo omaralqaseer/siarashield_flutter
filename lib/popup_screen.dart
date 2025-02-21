@@ -10,7 +10,7 @@ import 'siarashield_flutter.dart';
 class PopupScreen extends StatefulWidget {
   final String visiterId;
   final String requestId;
-  final CyberCieraModel cieraModel;
+  final CyberSiaraModel cieraModel;
   final Function(bool isSuccess) loginTap;
 
   const PopupScreen({super.key, required this.visiterId, required this.requestId, required this.cieraModel, required this.loginTap});
