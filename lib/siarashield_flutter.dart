@@ -39,7 +39,19 @@ class CyberSiaraWidget extends StatefulWidget {
   final CyberSiaraModel cyberSiaraModel;
   final Function(bool isTrue) loginTap;
 
-  const CyberSiaraWidget({super.key, required this.cyberSiaraModel, required this.loginTap});
+  //Custom loading widget
+  final Widget? loadingWidget;
+
+  //Custom submit button widget
+  final Widget? buttonWidget;
+
+  const CyberSiaraWidget({
+    super.key,
+    required this.cyberSiaraModel,
+    required this.loginTap,
+    this.loadingWidget,
+    this.buttonWidget,
+  });
 
   @override
   State<CyberSiaraWidget> createState() => _CyberSiaraWidgetState();
@@ -62,19 +74,23 @@ class _CyberSiaraWidgetState extends State<CyberSiaraWidget> {
 
       // If no token exists, store a new one with the private key and set verification to false.
       if (token == null || token.isEmpty) {
-        setToken({"Token": widget.cyberSiaraModel.privateKey, "isVerified": false});
+        setToken(
+            {"Token": widget.cyberSiaraModel.privateKey, "isVerified": false});
       }
       // If the stored token matches the expected private key and is verified, return true.
-      else if (token["Token"] == widget.cyberSiaraModel.privateKey && token["isVerified"] == true) {
+      else if (token["Token"] == widget.cyberSiaraModel.privateKey &&
+          token["isVerified"] == true) {
         isVerified = true;
       }
       // If the stored token matches the private key but is not verified, return false.
-      else if (token["Token"] == widget.cyberSiaraModel.privateKey && token["isVerified"] == false) {
+      else if (token["Token"] == widget.cyberSiaraModel.privateKey &&
+          token["isVerified"] == false) {
         isVerified = false;
       }
       // If the stored token does not match the private key, update storage and return false.
       else if (token["Token"] != widget.cyberSiaraModel.privateKey) {
-        setToken({"Token": widget.cyberSiaraModel.privateKey, "isVerified": false});
+        setToken(
+            {"Token": widget.cyberSiaraModel.privateKey, "isVerified": false});
         isVerified = false;
       }
     } catch (e) {
@@ -92,33 +108,46 @@ class _CyberSiaraWidgetState extends State<CyberSiaraWidget> {
       init: SaraShieldController(),
       initState: (val) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          val.controller?.getMyDeviceInfo(screenHeight(context), screenWidth(context), widget.cyberSiaraModel);
+          val.controller?.getMyDeviceInfo(screenHeight(context),
+              screenWidth(context), widget.cyberSiaraModel);
         });
       },
       builder: (controller) {
         return controller.isLoading.value
-            ? const Center(child: LoadingWidget())
-            : Container(
-                    padding: const EdgeInsets.only(top: 5),
-                    child: controller.isOtherLoading.value
-                        ? const LoadingWidget()
-                        : SizedBox(
-                            width: double.infinity,
-                            child: ElevatedButton(
-                                onPressed: () async {
-                                  _submitButtonTap(controller);
-                                },
-                                style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColors.blueColor,
-                                    padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),
-                                child: const Text(
-                                  "Submit",
-                                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15, color: AppColors.whiteColor),
-                                  maxLines: 1,
-                                )),
-                          ))
-                .putPadding(2, 5);
+            ? widget.loadingWidget ?? const Center(child: LoadingWidget())
+            : widget.buttonWidget != null
+                ? GestureDetector(
+                    onTap: () => _submitButtonTap(controller),
+                    //AbsorbPointer to ignore child action
+                    child: AbsorbPointer(child: widget.buttonWidget),
+                  )
+                : Container(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: controller.isOtherLoading.value
+                            ? const LoadingWidget()
+                            : SizedBox(
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                    onPressed: () async {
+                                      _submitButtonTap(controller);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor: AppColors.blueColor,
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 15, horizontal: 15),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5))),
+                                    child: const Text(
+                                      "Submit",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 15,
+                                          color: AppColors.whiteColor),
+                                      maxLines: 1,
+                                    )),
+                              ))
+                    .putPadding(2, 5);
       },
     );
   }
@@ -127,7 +156,6 @@ class _CyberSiaraWidgetState extends State<CyberSiaraWidget> {
   /// slide button verification, and captcha authentication if needed.
   _submitButtonTap(SaraShieldController controller) async {
     bool isVerified = await checkStorage();
-
     /// If the user is already verified, call the `loginTap` callback with `true`
     /// and return early to avoid unnecessary API calls.
     if (isVerified) {
@@ -141,11 +169,13 @@ class _CyberSiaraWidgetState extends State<CyberSiaraWidget> {
 
     if (controller.isVerified.value) {
       /// If the slide verification is successful, store the authentication token.
-      setToken({"Token": widget.cyberSiaraModel.privateKey, "isVerified": true});
+      setToken(
+          {"Token": widget.cyberSiaraModel.privateKey, "isVerified": true});
     }
 
     /// If slide verification fails and there is no API error, trigger the captcha popup.
-    else if (!controller.isVerified.value && controller.apiError.value.isEmpty) {
+    else if (!controller.isVerified.value &&
+        controller.apiError.value.isEmpty) {
       if (!context.mounted) return;
 
       /// The `PopupScreen` widget is responsible for rendering the captcha input.
@@ -164,7 +194,10 @@ class _CyberSiaraWidgetState extends State<CyberSiaraWidget> {
               /// and store the authentication token.
               if (val == true) {
                 controller.isVerified.value = true;
-                setToken({"Token": widget.cyberSiaraModel.privateKey, "isVerified": true});
+                setToken({
+                  "Token": widget.cyberSiaraModel.privateKey,
+                  "isVerified": true
+                });
               }
             },
           ).alertCard(context);
